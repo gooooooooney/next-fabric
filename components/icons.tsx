@@ -3,7 +3,12 @@ import {
   Moon,
   SunMedium,
   Twitter,
+  Square,
   type Icon as LucideIcon,
+  Circle,
+  Image,
+  Type,
+  Menu
 } from "lucide-react"
 
 export type Icon = LucideIcon
@@ -12,6 +17,11 @@ export const Icons = {
   sun: SunMedium,
   moon: Moon,
   twitter: Twitter,
+  square: Square,
+  circle: Circle,
+  image: Image,
+  type: Type,
+  menu: Menu,
   logo: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path
