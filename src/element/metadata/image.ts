@@ -1,3 +1,4 @@
+import { Icons } from "@/components/icons"
 import { fabric } from "@/lib/fabric"
 import { ComponentType } from "~/constants/enum"
 
@@ -18,7 +19,7 @@ export const imageBlock = {
   type: ComponentType.Img as ComponentType.Img,
   id: '',
   isLock: false,
-  icon: 'ImageIcon',
+  icon: Icons.image,
   name: 'Image',
   canvasStyle: {
     ...ImageCanvasStyle,

@@ -1,7 +1,7 @@
-import { TextCanvasStyle } from "./text";
-import { ImageCanvasStyle } from "./image";
-import { CircleCanvasStyle } from './circle';
-import { RectCanvasStyle } from './rect';
+import { textBlock, TextCanvasStyle } from "./text";
+import { imageBlock, ImageCanvasStyle } from "./image";
+import { circleBlock, CircleCanvasStyle } from './circle';
+import { rectBlock, RectCanvasStyle } from './rect';
 export type BlockInfo = typeof blockInfoList[number];
 
 // 公共样式
@@ -11,13 +11,13 @@ export const commonStyle = {
 }
 
 export const blockInfoList = [
-  TextCanvasStyle,
-  ImageCanvasStyle,
-  CircleCanvasStyle,
-  RectCanvasStyle,
+  textBlock,
+  imageBlock,
+  circleBlock,
+  rectBlock,
 ]
 
-export type TextBlock = typeof TextCanvasStyle;
-export type ImageBlock = typeof ImageCanvasStyle;
-export type CircleBlock = typeof CircleCanvasStyle;
-export type RectBlock = typeof RectCanvasStyle;
+export type TextBlock = typeof textBlock;
+export type ImageBlock = typeof imageBlock;
+export type CircleBlock = typeof circleBlock;
+export type RectBlock = typeof rectBlock;

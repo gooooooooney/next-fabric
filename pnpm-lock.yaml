@@ -31,12 +31,18 @@ dependencies:
   immer:
     specifier: ^10.0.2
     version: 10.0.2
+  lodash:
+    specifier: ^4.17.21
+    version: 4.17.21
   lucide-react:
     specifier: 0.105.0-alpha.4
     version: 0.105.0-alpha.4(react@18.2.0)
   mitt:
     specifier: ^3.0.0
     version: 3.0.0
+  nanoid:
+    specifier: ^4.0.2
+    version: 4.0.2
   next:
     specifier: ^13.4.4
     version: 13.4.4(@babel/core@7.22.5)(react-dom@18.2.0)(react@18.2.0)
@@ -66,6 +72,9 @@ devDependencies:
   '@ianvs/prettier-plugin-sort-imports':
     specifier: ^3.7.2
     version: 3.7.2(prettier@2.8.8)
+  '@types/lodash':
+    specifier: ^4.14.195
+    version: 4.14.195
   '@types/node':
     specifier: ^17.0.45
     version: 17.0.45
@@ -1233,6 +1242,10 @@ packages:
 
   /@types/json5@0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
+    dev: true
+
+  /@types/lodash@4.14.195:
+    resolution: {integrity: sha512-Hwx9EUgdwf2GLarOjQp5ZH8ZmblzcbTBC2wtQWNKARBSxM9ezRIAUpeDTgoQRAFB0+8CNWXVA9+MaSOzOF3nPg==}
     dev: true
 
   /@types/node@17.0.45:
@@ -3007,6 +3020,10 @@ packages:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
     dev: true
 
+  /lodash@4.17.21:
+    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
+    dev: false
+
   /loose-envify@1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
     hasBin: true
@@ -3145,6 +3162,12 @@ packages:
     resolution: {integrity: sha512-BGcqMMJuToF7i1rt+2PWSNVnWIkGCU78jBG3RxO/bZlnZPK2Cmi2QaffxGO/2RvWi9sL+FAiRiXMgsyxQ1DIDA==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
+
+  /nanoid@4.0.2:
+    resolution: {integrity: sha512-7ZtY5KTCNheRGfEFxnedV5zFiORN1+Y1N6zvPTnHQd8ENUvfaDBeuJDZb2bN/oXwXxu3qkTXDzy57W5vAmDTBw==}
+    engines: {node: ^14 || ^16 || >=18}
+    hasBin: true
+    dev: false
 
   /napi-build-utils@1.0.2:
     resolution: {integrity: sha512-ONmRUqK7zj7DWX0D9ADe03wbwOBZxNAfF20PlGfCWQcD3+/MakShIHrMqx9YwPTfxDdF1zLeL+RGZiR9kGMLdg==}

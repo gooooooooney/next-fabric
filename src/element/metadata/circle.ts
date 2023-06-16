@@ -1,3 +1,4 @@
+import { Icons } from "@/components/icons"
 import { fabric } from "@/lib/fabric"
 import { ComponentType } from "~/constants/enum"
 
@@ -42,7 +43,7 @@ export const circleBlock = {
     type: ComponentType.Circle as ComponentType.Circle,
     id: '',
     isLock: false,
-    icon: 'CircleIcon',
+    icon: Icons.circle,
     name: 'Circle',
     style: {
         width: 200,

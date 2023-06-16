@@ -5,7 +5,7 @@ import { immer } from 'zustand/middleware/immer'
 
 export interface CanvasStore {
   canvas: fabric.Canvas | undefined,
-  blocks: BlockInfo[];
+  blocks: BlockInfo['canvasStyle'][];
   canvasStyleData: CanvasStyleData,
   currentBlock: BlockInfo[],
   activeElements: fabric.Object[]
@@ -27,7 +27,7 @@ interface CanvasAction {
   updateCanvasContext: (canvas?: fabric.Canvas) => void
   updateCurrentBlock: (block: BlockInfo[]) => void
   updateActiveElements: (elements: fabric.Object[]) => void
-  updateBlocks: (blocks: BlockInfo[]) => void
+  updateBlocks: (blocks: BlockInfo['canvasStyle'][]) => void
   updateCanvasStyleData: (data: Partial<CanvasStyleData>) => void
   updateCanvasStyleDataByKey: (key: keyof CanvasStyleData, value: any) => void
   updateCanvasStyleDataByObject: (data: Partial<CanvasStyleData>) => void

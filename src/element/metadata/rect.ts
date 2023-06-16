@@ -1,3 +1,4 @@
+import { Icons } from "@/components/icons"
 import { fabric } from "@/lib/fabric"
 import { ComponentType } from "~/constants/enum"
 export type RectProps = ConstructorParameters<typeof fabric.Rect>[number] & {type: ComponentType.Rect, id?: string}
@@ -40,7 +41,7 @@ export const rectBlock = {
   type: ComponentType.Rect as ComponentType.Rect,
   id: '',
   isLock: false,
-  icon: 'SquareIcon',
+  icon: Icons.square,
   name: 'Rect',
   style: {
     width: 100,
