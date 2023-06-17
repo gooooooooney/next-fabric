@@ -19,6 +19,7 @@ const Editor = memo(() => {
     const c = new CanvasCore(canvas, {
       backgroundColor: canvasStyleData.backgroundColor,
     })
+    
     setCanvasRenderer(c.canvasRenderer)
     updateCanvasContext(canvas)
     return () => {
