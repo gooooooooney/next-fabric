@@ -8,10 +8,14 @@ import { useCanvasState } from "@/src/store/canvas"
 import { memo, useEffect, useRef, useState } from "react"
 import { cloneDeep, uid } from "@/lib/utils"
 import { CanvasElement } from "@/src/element"
+import Container from "typedi"
+import { CodeApplication } from "@/src/core/app"
 const Editor = memo(() => {
   const { canvas, blocks, updateBlocks, canvasStyleData, updateCanvasContext } = useCanvasState()
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const canvasWarpperRef = useRef<HTMLDivElement>(null)
   const [canvasRenderer, setCanvasRenderer]  = useState<CanvasElement | null>(null)
+  const app = Container.get(CodeApplication)
 
   useEffect(() => {
     if (!canvasRef.current) return
@@ -19,6 +23,7 @@ const Editor = memo(() => {
     const c = new CanvasCore(canvas, {
       backgroundColor: canvasStyleData.backgroundColor,
     })
+    app.canvas.test()
     
     setCanvasRenderer(c.canvasRenderer)
     updateCanvasContext(canvas)
@@ -73,7 +78,7 @@ const Editor = memo(() => {
         className=" h-full bg-[#f5f5f5] ">
         <div className=" h-full w-full">
           <div className="relative">
-            <div>
+            <div ref={canvasWarpperRef}>
               <canvas ref={canvasRef} id="canvas" width={canvasStyleData.width} height={canvasStyleData.height} />
             </div>
           </div>
