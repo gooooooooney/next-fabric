@@ -6,7 +6,6 @@ import { BlockInfo, CircleBlock, RectBlock, TextBlock } from "./metadata";
 export class CanvasElement {
   constructor(private canvas: fabric.Canvas) { }
   render(block: BlockInfo) {
-    debugger
     switch (block.type) {
       case ComponentType.TextBox:
         return this.renderText( block)

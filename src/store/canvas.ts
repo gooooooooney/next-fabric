@@ -3,6 +3,7 @@ import { create } from 'zustand'
 import { BlockInfo } from "../element/metadata";
 import { immer } from 'zustand/middleware/immer'
 
+
 export interface CanvasStore {
   canvas: fabric.Canvas | undefined,
   blocks: BlockInfo['canvasStyle'][];
@@ -39,8 +40,8 @@ export const useCanvasState = create(
     canvas: undefined,
     blocks: [],
     canvasStyleData: {
-      width: 750,
-      height: 750,
+      width: 390,
+      height: 844,
       scale: 100,
       backgroundColor: '#fff',
       opacity: 1,
@@ -64,7 +65,7 @@ export const useCanvasState = create(
         state.activeElements = elements as typeof state.activeElements
       })
     },
-    updateBlocks: (blocks: BlockInfo[]) => {
+    updateBlocks: (blocks: BlockInfo['canvasStyle'][]) => {
       set(state => {
         state.blocks = blocks as typeof state.blocks
       })

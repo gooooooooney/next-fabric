@@ -2,6 +2,8 @@ import * as fabric from 'fabric'
 
 export { fabric }
 
+type GradientOption = ConstructorParameters<typeof fabric.Gradient>[0]
+
 export const elementBorder = {
   // 实心 or 空心
   transparentCorners: false,
@@ -18,3 +20,25 @@ export const elementBorder = {
   cornerStrokeColor: '#9c6ade',
   borderOpacityWhenMoving: .3,
 } as const
+
+export function setGradient(element: fabric.Object | undefined, {
+  type = 'linear',
+  coords,
+  gradientUnits = 'pixels',
+  colorStops = [
+    { offset: 0, color: 'red', opacity: 1 },
+    { offset: 1, color: 'blue', opacity: 1 }
+  ],
+}: GradientOption) {
+  if (element) {
+    const gradientEle = new fabric.Gradient({
+      type,
+      coords: coords || { x1: 0, y1: 0, x2: element.width, y2: 0 },
+      gradientUnits,
+      colorStops
+    })
+    element.set('fill', gradientEle)
+
+  }
+
+}

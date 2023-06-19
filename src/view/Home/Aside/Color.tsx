@@ -1,46 +1,38 @@
+"use client"
 import { GradientColors } from "@/components/colors/gradientColors"
 import { SolidColors } from "@/components/colors/solidColors"
 import { Icons } from "@/components/icons"
 import { Tooltip } from "@/components/Tooltip"
+import { ColorPicker } from "@/components/ui/client"
+import { fabric, setGradient } from "@/lib/fabric"
 import { useCanvasState } from "@/src/store/canvas"
-import { Fragment, useMemo } from "react"
+import { Fragment, useEffect, useMemo, useState } from "react"
 
 export const Color = () => {
   const state = useCanvasState()
 
   const fill = useMemo(() => {
-    const f = state.activeElements?.length ? (state.currentBlock[0]?.fill as string)?.split(',') : state.canvasStyleData.backgroundColor?.split(",")
+    const f = state.activeElements?.length ? (state.currentBlock[0]?.canvasStyle.fill as string)?.split(',') : state.canvasStyleData.backgroundColor?.split(",")
     return f
   }, [state.activeElements, state.canvasStyleData.backgroundColor, state.currentBlock])
-  const currentColor = useSignal(fill.value[0])
-  const currentColorIndex = useSignal(0)
-  const colors = useSignal(fill.value)
+  const [currentColor, setCurrentColor] = useState(fill[0])
+  const [currentColorIndex, setCurrentColorIndex] = useState(0)
+  const [colors, _setColors] = useState(fill)
 
-  const displayColorPicker = useSignal(false)
+  const [displayColorPicker, setDisplayColorPicker] = useState(false)
   // const displayShadowColorPicker = useSignal(false)
   // const setDisplayShadowColorPicker = $((bol: boolean) => {
   //     displayShadowColorPicker.value = bol
   // })
-  const setDisplayColorPicker = $((bol: boolean) => {
-    displayColorPicker.value = bol
-  })
-  const setCurrentColor = $((color: string) => {
-    currentColor.value = color
-  })
-
-  useVisibleTask$(({ track }) => {
-    const _fill = track(() => fill.value)
-    currentColor.value = _fill[0]
-    colors.value = _fill
-  })
-  const setCurrentColorIndex = $((index: number) => {
-    currentColorIndex.value = index
-  })
+  useEffect(() => {
+    setCurrentColor(fill[0])
+    _setColors((preC) => fill)
+  }, [fill])
 
 
-  const setCanvasBackgroundColor = $((colors: string[]) => {
+  const setCanvasBackgroundColor = (colors: string[]) => {
     if (colors.length === 1) {
-      state.canvasStyleData.backgroundColor = colors[0]
+      state.updateCanvasStyleDataByKey('backgroundColor', colors[0])
       state.canvas?.set('backgroundColor', colors[0])
     } else {
       const gradient = new fabric.Gradient({
@@ -55,16 +47,16 @@ export const Color = () => {
           color,
         }))
       })
-      state.canvasStyleData.backgroundColor = colors.join(',')
+      state.updateCanvasStyleDataByKey('backgroundColor', colors.join(','))
       state.canvas?.set('backgroundColor', gradient)
     }
     state.canvas?.renderAll()
 
-  })
-  const setElementColor = $((colors: string[]) => {
+  }
+  const setElementColor = (colors: string[]) => {
     if (colors.length === 1) {
       state.currentBlock!.forEach(block => {
-        block.fill = colors[0]
+        block.canvasStyle.fill = colors[0]
       })
       state.activeElements?.forEach((element) => {
         element.set('fill', colors[0])
@@ -93,26 +85,26 @@ export const Color = () => {
       })
 
       state.currentBlock.forEach(block => {
-        block.fill = colors.join(',')
+        block.canvasStyle.fill = colors.join(',')
       })
     }
     state.canvas?.renderAll()
-  })
+  }
 
 
-  const setColors = $((color: string[]) => {
-    colors.value = color
+  const setColors = (color: string[]) => {
+    _setColors((preC) => color)
 
     // 没有活跃的block 不存在时，代表选中的是画布
     if (!state.activeElements?.length) {
-      setCanvasBackgroundColor(colors.value)
+      setCanvasBackgroundColor(color)
     } else {
-      setElementColor(colors.value)
+      setElementColor(color)
     }
     // state.canvas?.renderAll()
 
-  })
-  return <div className="left-2% min-w-xs w-xs shadow-radix h-2xl absolute top-0 overflow-y-auto rounded bg-white">
+  }
+  return <div className="h-2xl absolute left-0 top-8 z-50 w-80 min-w-min overflow-y-auto rounded bg-white shadow-md animate-in">
     <div className="m-5">
       <div className="mb-3">Image</div>
 
@@ -135,8 +127,8 @@ export const Color = () => {
           <div className="flex items-center gap-x-2 py-2">
             <Tooltip tip='add a new color'>
               <div
-                onClick$={() => {
-                  setCurrentColor(fill.value[0])
+                onClick={() => {
+                  setCurrentColor(fill[0])
                   // -1表示当前是新增一个颜色
                   setCurrentColorIndex(-1)
                   setDisplayColorPicker(true)
@@ -147,11 +139,11 @@ export const Color = () => {
               </div>
             </Tooltip>
             {
-              colors.value.map((color, index) => <Fragment key={color + index}>
+              colors.map((color, index) => <Fragment key={color + index}>
                 <Tooltip tip={color}>
                   <div
-                    preventdefault:click
-                    onClick$={(e) => {
+                    onClick={(e) => {
+                      e.preventDefault()
                       e.stopPropagation()
                       // 设置当前颜色的索引
                       setCurrentColorIndex(index)
@@ -170,24 +162,24 @@ export const Color = () => {
             }
           </div>
           {
-            displayColorPicker.value ?
+            displayColorPicker ?
               <div >
-                <div className="fixed inset-0" onClick$={() => setDisplayColorPicker(false)} />
+                <div className="fixed inset-0" onClick={() => setDisplayColorPicker(false)} />
                 <div className="z-2 absolute left-1/2 top-full -translate-x-[50%]">
-                  <ColorChromePicker
-                    onChangeComplete$={(color) => {
+                  <ColorPicker.ChromePicker
+                    onChangeComplete={(color) => {
                       const hexColor = color.hex
                       setCurrentColor(hexColor)
-                      if (currentColorIndex.value == -1) {
-                        setColors([...colors.value, hexColor])
-                        setCurrentColorIndex(colors.value.length)
+                      if (currentColorIndex == -1) {
+                        setColors([...colors, hexColor])
+                        setCurrentColorIndex(colors.length)
                       } else {
-                        colors.value[currentColorIndex.value] = hexColor
-                        setColors([...colors.value])
+                        colors[currentColorIndex] = hexColor
+                        setColors([...colors])
                       }
 
                     }}
-                    color={currentColor.value} />
+                    color={currentColor} />
                   {/* <input type="color" name="" id="" /> */}
                 </div>
 

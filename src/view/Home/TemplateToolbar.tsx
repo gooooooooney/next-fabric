@@ -1,7 +1,9 @@
 'use client'
 import { ComponentType } from '@/src/constants/enum';
 import { blockInfoList } from '@/src/element/metadata';
-import React, { Fragment } from 'react';
+import { useAttrState } from '@/src/store/attrState';
+import { useCanvasState } from '@/src/store/canvas';
+import React, { Fragment, use, useMemo } from 'react';
 import { Toolbar, ToolbarSeparator, ToolbarToggleGroup, ToolbarToggleItem } from '../../../components/ui/toolbar';
 
 
@@ -13,11 +15,35 @@ const TemplateToolbar = () => {
 
     e.dataTransfer?.setData("type", target.dataset.type ?? ComponentType.TextBox)
   }
+  const attrState = useAttrState()
+  const canvasState = useCanvasState()
+
+  const fill = useMemo(() => {
+    const f = canvasState.activeElements?.length ? (canvasState.currentBlock[0]?.canvasStyle.fill as string)?.split(',') : canvasState.canvasStyleData.backgroundColor?.split(",")
+    return f
+}, [canvasState.activeElements?.length, canvasState.canvasStyleData.backgroundColor, canvasState.currentBlock])
   return <div className='w-1/3' onDragStart={(e) => handleDragStart(e)}>
     <Toolbar
       aria-label="Formatting options"
 
     >
+      <ToolbarToggleGroup
+        className='flex items-center justify-center' type="single" >
+
+        <ToolbarToggleItem
+          value={"color"}
+        >
+          <div>
+            <span
+              onClick={() => attrState.updateAttrStateByKey("shouldShowColor", true)}
+              className=" border-shape flex h-[25px] w-[25px] cursor-pointer items-center  justify-center rounded hover:opacity-80 "
+              style={{ background: fill.length > 1 ? 'linear-gradient(to right,' + fill.join(",") + ')' : fill[0] }}
+            >
+            </span>
+          </div>
+        </ToolbarToggleItem>
+      </ToolbarToggleGroup>
+      <ToolbarSeparator />
       {
         blockInfoList.map((ele) => (
           <Fragment key={ele.name}>
