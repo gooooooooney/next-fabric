@@ -3,13 +3,13 @@ import { create } from 'zustand'
 import { BlockInfo } from "../element/metadata";
 import { immer } from 'zustand/middleware/immer'
 
-
+type Block = BlockInfo['canvasStyle']
 export interface CanvasStore {
   canvas: fabric.Canvas | undefined,
-  blocks: BlockInfo['canvasStyle'][];
+  blocks: Block[];
   canvasStyleData: CanvasStyleData,
-  currentBlock: BlockInfo[],
-  activeElements: fabric.Object[]
+  currentBlock: Block[],
+  activeElements: fabric.BaseFabricObject[]
   // updateCurrentBlock: QRL<(this: GlobalState, block: BlockInfo[]) => void>
   // updateCanvasContext: QRL<(this: GlobalState, canvas?: Canvas) => void>
   // updateActiveElements: QRL<(this: GlobalState, elements: fabric.Object[]) => void>
@@ -26,9 +26,9 @@ export interface CanvasStyleData { // 页面全局数据
 
 interface CanvasAction {
   updateCanvasContext: (canvas?: fabric.Canvas) => void
-  updateCurrentBlock: (block: BlockInfo[]) => void
-  updateActiveElements: (elements: fabric.Object[]) => void
-  updateBlocks: (blocks: BlockInfo['canvasStyle'][]) => void
+  updateCurrentBlock: (block: Block[]) => void
+  updateActiveElements: (elements: fabric.BaseFabricObject[]) => void
+  updateBlocks: (blocks: Block[]) => void
   updateCanvasStyleData: (data: Partial<CanvasStyleData>) => void
   updateCanvasStyleDataByKey: (key: keyof CanvasStyleData, value: any) => void
   updateCanvasStyleDataByObject: (data: Partial<CanvasStyleData>) => void
@@ -55,19 +55,23 @@ export const useCanvasState = create(
         state.canvas = canvas as typeof state.canvas
       })
     },
-    updateCurrentBlock: (block: BlockInfo[]) => {
+    updateCurrentBlock: (block: Block[]) => {
       set(state => {
         state.currentBlock = block as typeof state.currentBlock
+        state.blocks = [...state.blocks.filter(v => state.currentBlock.some(b => b.id !== v.id)), ...state.currentBlock]
+        debugger
+        console.log(state.blocks)
       })
     },
-    updateActiveElements: (elements: fabric.Object[]) => {
+    updateActiveElements: (elements: fabric.BaseFabricObject[]) => {
       set(state => {
         state.activeElements = elements as typeof state.activeElements
       })
     },
-    updateBlocks: (blocks: BlockInfo['canvasStyle'][]) => {
+    updateBlocks: (blocks: Block[]) => {
       set(state => {
-        state.blocks = blocks as typeof state.blocks
+        console.log(blocks)
+        state.blocks = blocks as any
       })
     },
     updateCanvasStyleData: (data: Partial<CanvasStyleData>) => {

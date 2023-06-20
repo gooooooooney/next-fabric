@@ -21,7 +21,7 @@ export const elementBorder = {
   borderOpacityWhenMoving: .3,
 } as const
 
-export function setGradient(element: fabric.Object | undefined, {
+export function setGradient(element: fabric.BaseFabricObject | undefined, {
   type = 'linear',
   coords,
   gradientUnits = 'pixels',

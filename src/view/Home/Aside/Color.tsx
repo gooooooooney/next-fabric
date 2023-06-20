@@ -6,24 +6,22 @@ import { Tooltip } from "@/components/Tooltip"
 import { ColorPicker } from "@/components/ui/client"
 import { fabric, setGradient } from "@/lib/fabric"
 import { useCanvasState } from "@/src/store/canvas"
+import { useCanvasContext } from "@/src/use/useCanvasStore"
 import { Fragment, useEffect, useMemo, useState } from "react"
 
 export const Color = () => {
-  const state = useCanvasState()
+  const state = useCanvasContext()
 
   const fill = useMemo(() => {
-    const f = state.activeElements?.length ? (state.currentBlock[0]?.canvasStyle.fill as string)?.split(',') : state.canvasStyleData.backgroundColor?.split(",")
-    return f
-  }, [state.activeElements, state.canvasStyleData.backgroundColor, state.currentBlock])
+    const f = state.activeElements?.length ? (state.currentBlock[0]?.fill as string)?.split(',') : state.canvasStyleData.backgroundColor?.split(",")
+    console.log(state.currentBlock)
+    return f || ["#fff"]
+  }, [state.activeElements, state.currentBlock])
   const [currentColor, setCurrentColor] = useState(fill[0])
   const [currentColorIndex, setCurrentColorIndex] = useState(0)
   const [colors, _setColors] = useState(fill)
 
   const [displayColorPicker, setDisplayColorPicker] = useState(false)
-  // const displayShadowColorPicker = useSignal(false)
-  // const setDisplayShadowColorPicker = $((bol: boolean) => {
-  //     displayShadowColorPicker.value = bol
-  // })
   useEffect(() => {
     setCurrentColor(fill[0])
     _setColors((preC) => fill)
@@ -32,7 +30,9 @@ export const Color = () => {
 
   const setCanvasBackgroundColor = (colors: string[]) => {
     if (colors.length === 1) {
-      state.updateCanvasStyleDataByKey('backgroundColor', colors[0])
+      state.setCanvasStyleData({
+        'backgroundColor': colors[0]
+      })
       state.canvas?.set('backgroundColor', colors[0])
     } else {
       const gradient = new fabric.Gradient({
@@ -47,17 +47,19 @@ export const Color = () => {
           color,
         }))
       })
-      state.updateCanvasStyleDataByKey('backgroundColor', colors.join(','))
+      state.setCanvasStyleData({
+        'backgroundColor': colors.join(',')
+      })
       state.canvas?.set('backgroundColor', gradient)
     }
-    state.canvas?.renderAll()
 
   }
   const setElementColor = (colors: string[]) => {
     if (colors.length === 1) {
-      state.currentBlock!.forEach(block => {
-        block.canvasStyle.fill = colors[0]
-      })
+      state.setCurrentBlock(state.currentBlock!.map(block => ({
+        ...block,
+        fill: colors[0]
+      })))
       state.activeElements?.forEach((element) => {
         element.set('fill', colors[0])
       })
@@ -84,11 +86,11 @@ export const Color = () => {
         })
       })
 
-      state.currentBlock.forEach(block => {
-        block.canvasStyle.fill = colors.join(',')
-      })
+      state.setCurrentBlock(state.currentBlock!.map(block => ({
+        ...block,
+        fill: colors.join(',')
+      })))
     }
-    state.canvas?.renderAll()
   }
 
 
@@ -101,12 +103,12 @@ export const Color = () => {
     } else {
       setElementColor(color)
     }
-    // state.canvas?.renderAll()
+    state.canvas?.renderAll()
 
   }
   return <div className="h-2xl absolute left-0 top-8 z-50 w-80 min-w-min overflow-y-auto rounded bg-white shadow-md animate-in slide-in-from-right-2">
     <div className="m-5">
-      <div className="mb-3">Image</div>
+      <div className="mb-3">Color</div>
 
       <div onClick={(e) => {
         const color = (e.target as HTMLDivElement).getAttribute('data-color')

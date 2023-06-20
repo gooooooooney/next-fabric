@@ -3,6 +3,7 @@ import { ComponentType } from '@/src/constants/enum';
 import { blockInfoList } from '@/src/element/metadata';
 import { useAttrState } from '@/src/store/attrState';
 import { useCanvasState } from '@/src/store/canvas';
+import { useCanvasContext } from '@/src/use/useCanvasStore';
 import React, { Fragment, use, useMemo } from 'react';
 import { Toolbar, ToolbarSeparator, ToolbarToggleGroup, ToolbarToggleItem } from '../../../components/ui/toolbar';
 
@@ -16,12 +17,14 @@ const TemplateToolbar = () => {
     e.dataTransfer?.setData("type", target.dataset.type ?? ComponentType.TextBox)
   }
   const attrState = useAttrState()
-  const canvasState = useCanvasState()
+  const state = useCanvasContext()
 
   const fill = useMemo(() => {
-    const f = canvasState.activeElements?.length ? (canvasState.currentBlock[0]?.canvasStyle.fill as string)?.split(',') : canvasState.canvasStyleData.backgroundColor?.split(",")
-    return f
-}, [canvasState.activeElements?.length, canvasState.canvasStyleData.backgroundColor, canvasState.currentBlock])
+    const f = state.activeElements?.length ? (state.currentBlock[0]?.fill as string)?.split(',') : state.canvasStyleData.backgroundColor?.split(",")
+    
+    return f || ["#fff"]
+}, [state.activeElements?.length, state.canvasStyleData.backgroundColor, state.currentBlock])
+
   return <div className='w-1/3' onDragStart={(e) => handleDragStart(e)}>
     <Toolbar
       aria-label="Formatting options"

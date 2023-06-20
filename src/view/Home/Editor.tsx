@@ -1,6 +1,6 @@
 'use client'
 import { elementBorder, fabric } from "@/lib/fabric"
-import { ComponentType } from "@/src/constants/enum"
+import { CANVAS_EVENT_SELECTED, ComponentType } from "@/src/constants/enum"
 import { canvasConfig } from "@/src/constants/fabric"
 import { CanvasCore } from "@/src/core"
 import { blockInfoList } from "@/src/element/metadata"
@@ -8,26 +8,37 @@ import { useCanvasState } from "@/src/store/canvas"
 import { memo, useEffect, useRef, useState } from "react"
 import { cloneDeep, uid } from "@/lib/utils"
 import { CanvasElement } from "@/src/element"
+import { emitter } from "@/src/core/event"
+import { useCanvasSelectedInitEvent } from "@/src/use/useInitEvent"
+import { useContextMenu } from "@/src/use/useContextMenu"
+import { useCanvasContext } from "@/src/use/useCanvasStore"
 const Editor = memo(() => {
-  const { canvas, blocks, updateBlocks, canvasStyleData, updateCanvasContext } = useCanvasState()
+  // const state = useCanvasState()
+  const state = useCanvasContext()
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const canvasWarpperRef = useRef<HTMLDivElement>(null)
-  const [canvasRenderer, setCanvasRenderer]  = useState<CanvasElement | null>(null)
-
+  const [canvasRenderer, setCanvasRenderer] = useState<CanvasElement | null>(null)
   useEffect(() => {
     if (!canvasRef.current) return
     const canvas = new fabric.Canvas(canvasRef.current, Object.assign(canvasConfig))
     const c = new CanvasCore(canvas, {
-      backgroundColor: canvasStyleData.backgroundColor,
+      backgroundColor: state.canvasStyleData.backgroundColor,
     })
-    
+
     setCanvasRenderer(c.canvasRenderer)
-    updateCanvasContext(canvas)
+    state.setCanvas(canvas)
+    
     return () => {
       canvas.dispose()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+  useCanvasSelectedInitEvent()
+  const {shouldShowContextMenu, contextPosition} = useContextMenu()
+
+  useEffect(() => {
+    console.log(state.blocks)
+
+  }, [state.blocks])
 
   const render = ({ type, rect, clientX, clientY }: { type: ComponentType, rect: DOMRect, clientX: number, clientY: number }) => {
     if (type) {
@@ -37,14 +48,17 @@ const Editor = memo(() => {
         const { top, left } = rect;
         item.canvasStyle.top = clientY - top;
         item.canvasStyle.left = clientX - left;
-        updateBlocks([...blocks, cloneDeep(item.canvasStyle)]);
+        item.canvasStyle.id = item.id;
+        state.setBlocks((prev) => [...prev, cloneDeep(item.canvasStyle)]);
+        console.log(state.blocks)
         const element = canvasRenderer?.render(item);
         if (element) {
           element.set({
             id: item.id,
             ...elementBorder
           });
-          canvas?.setActiveObject(element);
+          state.canvas?.setActiveObject(element);
+          state.setCurrentBlock([cloneDeep(item.canvasStyle)])
         }
       }
     }
@@ -74,8 +88,8 @@ const Editor = memo(() => {
         className=" h-full bg-[#f5f5f5] ">
         <div className=" h-full w-full">
           <div className="relative">
-            <div ref={canvasWarpperRef}>
-              <canvas ref={canvasRef} id="canvas" width={canvasStyleData.width} height={canvasStyleData.height} />
+            <div>
+              <canvas ref={canvasRef} id="canvas" width={state.canvasStyleData.width} height={state.canvasStyleData.height} />
             </div>
           </div>
 
