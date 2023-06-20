@@ -95,7 +95,6 @@ export class EventManager extends Disposable {
     const activeElements = this.getActiveObjects()
     if (activeElements?.length === 1) {
       const activeElement = activeElements[0]
-      console.log(111)
       emitter.emit(CANVAS_EVENT_SELECTED.ONE, activeElement)
     } else if (activeElements?.length > 1) {
       emitter.emit(CANVAS_EVENT_SELECTED.MULTIPLY, activeElements)

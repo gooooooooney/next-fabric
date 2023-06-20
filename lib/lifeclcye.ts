@@ -47,7 +47,7 @@ export interface IDisposable {
  * Check if `thing` is {@link IDisposable disposable}.
  */
 export function isDisposable<E extends object>(thing: E): thing is E & IDisposable {
-	return typeof (<IDisposable>thing).dispose === 'function' && (<IDisposable>thing).dispose.length === 0;
+	return typeof (thing as IDisposable).dispose === 'function' && (thing as IDisposable).dispose.length === 0;
 }
 
 /**

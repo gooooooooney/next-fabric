@@ -2,7 +2,7 @@ import Link from "next/link"
 
 import { siteConfig } from "@/config/site"
 import { buttonVariants } from "@/components/ui/button"
-import { Home } from "@/src/view/Home/Hom"
+import { Home } from "@/src/view/Home/Home"
 
 export default function IndexPage() {
   return (

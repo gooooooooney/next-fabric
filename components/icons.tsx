@@ -10,7 +10,14 @@ import {
   Type,
   Menu,
   Plus,
-  Palette
+  Palette,
+  Bold,
+  Italic,
+  Underline,
+  Strikethrough,
+  AlignCenter,
+  AlignLeft,
+  AlignRight,
 } from "lucide-react"
 
 export type Icon = LucideIcon
@@ -26,6 +33,13 @@ export const Icons = {
   menu: Menu,
   plus: Plus,
   palette: Palette,
+  bold: Bold,
+  italic: Italic,
+  underline: Underline,
+  strikethrough: Strikethrough,
+  alignCenter: AlignCenter,
+  alignLeft: AlignLeft,
+  alignRight: AlignRight,
   logo: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path

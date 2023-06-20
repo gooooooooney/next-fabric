@@ -50,7 +50,6 @@ const Editor = memo(() => {
         item.canvasStyle.left = clientX - left;
         item.canvasStyle.id = item.id;
         state.setBlocks((prev) => [...prev, cloneDeep(item.canvasStyle)]);
-        console.log(state.blocks)
         const element = canvasRenderer?.render(item);
         if (element) {
           element.set({

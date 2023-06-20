@@ -59,8 +59,7 @@ export const useCanvasState = create(
       set(state => {
         state.currentBlock = block as typeof state.currentBlock
         state.blocks = [...state.blocks.filter(v => state.currentBlock.some(b => b.id !== v.id)), ...state.currentBlock]
-        debugger
-        console.log(state.blocks)
+       
       })
     },
     updateActiveElements: (elements: fabric.BaseFabricObject[]) => {
@@ -70,7 +69,6 @@ export const useCanvasState = create(
     },
     updateBlocks: (blocks: Block[]) => {
       set(state => {
-        console.log(blocks)
         state.blocks = blocks as any
       })
     },

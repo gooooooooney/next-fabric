@@ -14,7 +14,6 @@ export const Color = () => {
 
   const fill = useMemo(() => {
     const f = state.activeElements?.length ? (state.currentBlock[0]?.fill as string)?.split(',') : state.canvasStyleData.backgroundColor?.split(",")
-    console.log(state.currentBlock)
     return f || ["#fff"]
   }, [state.activeElements, state.currentBlock])
   const [currentColor, setCurrentColor] = useState(fill[0])
@@ -106,14 +105,13 @@ export const Color = () => {
     state.canvas?.renderAll()
 
   }
-  return <div className="h-2xl absolute left-0 top-8 z-50 w-80 min-w-min overflow-y-auto rounded bg-white shadow-md animate-in slide-in-from-right-2">
+  return <div className="absolute left-0 top-8 z-50 min-h-[35rem] w-80 min-w-min overflow-y-auto rounded bg-white shadow-md animate-in slide-in-from-right-2">
     <div className="m-5">
       <div className="mb-3">Color</div>
 
       <div onClick={(e) => {
         const color = (e.target as HTMLDivElement).getAttribute('data-color')
         if (color) {
-          console.log(color)
           setColors(color.split(","))
         }
       }}>
