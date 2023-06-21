@@ -1,7 +1,7 @@
 "use client"
 import { ComponentType } from '@/src/constants/enum'
 import { useCanvasContext } from '@/src/use/useCanvasStore'
-import React, { use, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import TextAttribute from './TexAttribute/TextAttribute'
 
 export function Attr() {

@@ -4,7 +4,7 @@ import { blockInfoList } from '@/src/element/metadata';
 import { useAttrState } from '@/src/store/attrState';
 import { useCanvasState } from '@/src/store/canvas';
 import { useCanvasContext } from '@/src/use/useCanvasStore';
-import React, { Fragment, use, useMemo } from 'react';
+import React, { Fragment, useMemo } from 'react';
 import { Toolbar, ToolbarSeparator, ToolbarToggleGroup, ToolbarToggleItem } from '../../../components/ui/toolbar';
 
 
@@ -39,7 +39,7 @@ const TemplateToolbar = () => {
           <div>
             <span
               onClick={() => attrState.updateAttrStateByKey("shouldShowColor", true)}
-              className=" border-shape flex h-[25px] w-[25px] cursor-pointer items-center  justify-center rounded hover:opacity-80 "
+              className="flex h-[25px] w-[25px] cursor-pointer items-center justify-center rounded border shadow hover:opacity-80 "
               style={{ background: fill.length > 1 ? 'linear-gradient(to right,' + fill.join(",") + ')' : fill[0] }}
             >
             </span>
@@ -58,8 +58,9 @@ const TemplateToolbar = () => {
 
               <ToolbarToggleItem
                 value={ele.type}
+                className="flex h-[25px] w-[25px] cursor-pointer items-center justify-center rounded border shadow hover:opacity-80 "
               >
-                <ele.icon />
+                <ele.icon className="h-18px w-[18px]" />
               </ToolbarToggleItem>
             </ToolbarToggleGroup>
             <ToolbarSeparator />

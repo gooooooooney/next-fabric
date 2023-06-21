@@ -1,5 +1,5 @@
 import { fabric } from "@/lib/fabric"
-import { use, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { CANVAS_EVENT_SELECTED, Canvas_Event_Object } from "../constants/enum"
 import { emitter } from "../core/event"
 import { useCanvasState } from "../store/canvas"

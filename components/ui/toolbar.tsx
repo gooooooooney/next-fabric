@@ -16,7 +16,7 @@ const ToolbarToggleItem = React.forwardRef<
     {...props}
     className={cn(
       buttonVariants({ variant: "ghost", size: "sm" }),
-      "ml-0.5 inline-flex h-[25px] shrink-0 grow-0 basis-auto items-center justify-center rounded bg-background px-[5px] text-[13px] leading-none text-foreground outline-none first:ml-0",
+      "ml-0.5 inline-flex h-[25px] shrink-0 grow-0 basis-auto items-center justify-center rounded px-[5px] text-[13px] leading-none text-foreground outline-none transition-colors first:ml-0 ",
       // "text-mauve11 hover:bg-violet3 hover:text-violet11 focus:shadow-violet7 data-[state=on]:bg-violet5 data-[state=on]:text-violet11 ml-0.5 inline-flex h-[25px] shrink-0 grow-0 basis-auto items-center justify-center rounded bg-white px-[5px] text-[13px] leading-none outline-none first:ml-0 focus:relative focus:shadow-[0_0_0_2px]",
       // "inline-flex h-[25px] items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
       // "hover:bg-accent hover:text-accent-foreground",
@@ -38,7 +38,7 @@ const Toolbar = React.forwardRef<
   <ToolbarPrimitive.Root
     ref={ref}
     className={cn(
-      "flex min-h-full w-full min-w-max rounded-md border border-border bg-background p-2 shadow-md ",
+      "flex min-h-full w-full min-w-max rounded-md border border-border bg-white p-2 shadow-md ",
       className
     )}
   >
