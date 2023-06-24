@@ -66,8 +66,7 @@ export default function TextAttribute() {
                                                 id={size.value.toString()}
                                             />
                                             <SLabel
-
-                                                htmlFor={size.value.toString()} className={cn("p-2", size.size)}>{size.label}
+                                                htmlFor={size.value.toString()} className={cn("p-2, cursor-pointer", size.size)}>{size.label}
                                             </SLabel>
                                         </div>
                                     })
