@@ -2,7 +2,8 @@
 import { ComponentType } from '@/src/constants/enum'
 import { useCanvasContext } from '@/src/use/useCanvasStore'
 import React, { useMemo } from 'react'
-import TextAttribute from './TexAttribute/TextAttribute'
+import { ShadowAttr } from './shadowAttrbute/ShadowAttrbute'
+import TextAttribute from './texAttribute/TextAttribute'
 
 export function Attr() {
 
@@ -21,9 +22,14 @@ export function Attr() {
         }
         return null
     }
+    const renderShadowAttr = () => {
+        if (state.activeElements.length > 0) return <ShadowAttr />
+        return null
+    }
     return (
         <div className="min-h-[35rem] overflow-auto ">
             {renderTextAttr()}
+            {renderShadowAttr()}
         </div>
     )
 }

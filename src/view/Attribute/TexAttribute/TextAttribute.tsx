@@ -1,5 +1,6 @@
 'use client'
 import Label from '@/components/label'
+import { Select } from '@/components/select/select'
 import { Label as SLabel } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Textarea } from '@/components/ui/textarea'
@@ -12,11 +13,29 @@ import TextToolbar from './Toobar'
 export default function TextAttribute() {
     const state = useCanvasContext()
     const elements = state.canvas?.getActiveObjects()
+    const fontSizeRange = Array.from({ length: 28 }, (_, i) => i + 12)
+
     const textSizes = [
         { label: 'S', value: 12, size: 'text-[12px]' },
         { label: 'M', value: 16, size: 'text-[16px]' },
         { label: 'L', value: 20, size: 'text-[20px]' },
         { label: 'XL', value: 24, size: 'text-[24px]' },
+    ]
+    const textFontFamily = [
+        { label: 'Times New Roman', value: 'Times New Roman', className: 'font-Times-New-Roman' },
+        { label: 'Arial', value: 'Arial', className: 'font-Arial' },
+        { label: 'Hoefler Text', value: 'Hoefler Text', className: 'font-Hoefler-Text' },
+        { label: 'Delicious', value: 'Delicious', className: 'font-Delicious' },
+        { label: 'Helvetica', value: 'Helvetica', className: 'font-Helvetica' },
+        { label: 'Verdana', value: 'Verdana', className: 'font-Verdana' },
+        { label: 'Georgia', value: 'Georgia', className: 'font-Georgia' },
+        { label: 'Courier', value: 'Courier', className: 'font-Courier' },
+        { label: 'Comic Sans MS', value: 'Comic Sans MS', className: 'font-Comic-Sans-MS' },
+        { label: 'Impact', value: 'Impact', className: 'font-Impact' },
+        { label: 'Monaco', value: 'Monaco', className: 'font-Monaco' },
+        { label: 'Optima', value: 'Optima', className: 'font-Optima' },
+        { label: 'Plaster', value: 'Plaster', className: 'font-Plaster' },
+        { label: 'Engagement', value: 'Engagement', className: 'font-Engagement' },
     ]
     return (
         <div className="relative w-full animate-in slide-in-from-top-2 ">
@@ -66,7 +85,7 @@ export default function TextAttribute() {
                                                 id={size.value.toString()}
                                             />
                                             <SLabel
-                                                htmlFor={size.value.toString()} className={cn("p-2, cursor-pointer", size.size)}>{size.label}
+                                                htmlFor={size.value.toString()} className={cn("p-4, cursor-pointer", size.size)}>{size.label}
                                             </SLabel>
                                         </div>
                                     })
@@ -74,18 +93,38 @@ export default function TextAttribute() {
                             </RadioGroup>
 
                         </div>
-                        {/* <NumberSelte
-                            range={fontSizeRange}
-                            value={blocks[0]?.fontSize?.toString()}
-                            onValueChange$={size => {
-                                blocks.forEach((block) => {
-                                    block.fontSize = Number(size)
-                                })
-                                elements?.forEach((element) => {
-                                    element?.set('fontSize', Number(size))
-                                })
-                                state.canvas?.renderAll()
-                            }} /> */}
+                        <div className='w-24'>
+                            <Select
+                                label="Font size"
+                                value={state.blocks[0]?.fontSize?.toString()}
+                                onValueChange={size => {
+                                    state.setCurrentBlock(state.currentBlock.map((block) => ({ ...block, fontSize: Number(size) })))
+                                    elements?.forEach((element) => {
+                                        element?.set('fontSize', Number(size))
+                                    })
+                                    state.canvas?.renderAll()
+                                }}
+                                items={fontSizeRange} />
+                        </div>
+                    </Label>
+
+                    <Label
+                        className='mt-4'
+                        label="Font family" htmlFor="ff">
+                        <div id="ff">
+                            <Select
+                                label="Font family"
+                                value={state.blocks[0]?.fontFamily}
+                                onValueChange={fontFamily => {
+                                    state.setCurrentBlock(state.currentBlock.map((block) => ({ ...block, fontFamily })))
+                                    elements?.forEach((element) => {
+                                        element?.set('fontFamily', fontFamily)
+                                    })
+                                    state.canvas?.renderAll()
+                                }}
+                                prop="value"
+                                items={textFontFamily} />
+                        </div>
                     </Label>
 
                     {/* <Label className="mt-4" label="Font family">

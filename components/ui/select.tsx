@@ -107,6 +107,7 @@ const SelectSeparator = React.forwardRef<
   />
 ))
 SelectSeparator.displayName = SelectPrimitive.Separator.displayName
+const SelectIcon = SelectPrimitive.Icon
 
 export {
   Select,
@@ -117,4 +118,5 @@ export {
   SelectLabel,
   SelectItem,
   SelectSeparator,
+  SelectIcon
 }

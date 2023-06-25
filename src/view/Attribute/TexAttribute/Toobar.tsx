@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { Toolbar, ToolbarSeparator, ToolbarToggleGroup, ToolbarToggleItem } from '@/components/ui/toolbar';
 import { Icons } from '@/components/icons';
 import { useCanvasContext } from '~/use/useCanvasStore';
-import { FontStyle, FontWeight, TextDecoration } from '@/src/constants/enum/style';
+import { FontStyle, FontWeight, TextAlign, TextDecoration } from '@/src/constants/enum/style';
 import { fabric } from '@/lib/fabric';
 
 const TextToolbar = () => {
@@ -44,6 +44,16 @@ const TextToolbar = () => {
     })
     state.canvas?.renderAll()
   }
+
+  const handleChangeAlignment = (value: TextAlign) => {
+    state.blocks.forEach((block) => {
+      block.textAlign = value
+    })
+    elements?.forEach((element) => {
+      element?.set('textAlign', value)
+    })
+    state.canvas?.renderAll()
+  }
   return (
     <Toolbar
       aria-label="Formatting options"
@@ -79,7 +89,11 @@ const TextToolbar = () => {
         </ToolbarToggleItem>
       </ToolbarToggleGroup>
       <ToolbarSeparator />
-      <ToolbarToggleGroup type="single" defaultValue="center" aria-label="Text alignment">
+      <ToolbarToggleGroup
+        defaultValue={state.blocks[0].textAlign}
+        onValueChange={handleChangeAlignment}
+        type="single"
+        aria-label="Text alignment">
         <ToolbarToggleItem
           value="left"
           className='ml-0.5 inline-flex h-[25px] shrink-0 grow-0 basis-auto items-center justify-center rounded bg-white px-[5px] text-[13px] leading-none outline-none first:ml-0 hover:text-violet-600 focus:relative focus:shadow-[0_0_0_2px] focus:shadow-violet-500 data-[state=on]:bg-violet-400 data-[state=on]:text-violet-100'
