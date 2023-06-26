@@ -4,13 +4,14 @@ import { CANVAS_EVENT_SELECTED, Canvas_Event_Object } from "../constants/enum"
 import { emitter } from "../core/event"
 import { useCanvasState } from "../store/canvas"
 import { useCanvasContext } from "./useCanvasStore"
+import { useMount } from "./useMount"
 
 export const useContextMenu = () => {
   const state = useCanvasContext()
 
   const [shouldShowContextMenu, setShouldShowContextMenu] = useState(false)
   const [contextPosition, setContextPosition] = useState({ left: 0, top: 0 })
-  useEffect(() => {
+  useMount(() => {
     emitter.on(CANVAS_EVENT_SELECTED.NONE, () => {
       setShouldShowContextMenu(false)
     })
@@ -26,6 +27,6 @@ export const useContextMenu = () => {
         })
       }
     })
-  }, [])
+  })
   return { shouldShowContextMenu, contextPosition }
 }

@@ -1,3 +1,4 @@
+import { forEach } from 'lodash'
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 
@@ -31,6 +32,16 @@ export const useAttrState = create(
     },
     updateAttrStateByKey: (key: keyof AttrState, value: any) => {
       set(state => {
+        forEach(state, (v, k) => {
+          if (k === key) {
+            state[k] = value
+          } else {
+            if (typeof state[k as keyof AttrState] === 'boolean') {
+              state[k as keyof AttrState] = false
+            }
+
+          }
+        })
         state[key] = value
       })
     }

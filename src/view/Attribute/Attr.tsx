@@ -4,7 +4,7 @@ import { useCanvasContext } from '@/src/use/useCanvasStore'
 import React, { useMemo } from 'react'
 import { ShadowAttr } from './shadowAttribute/shadow-attribute'
 import { StrokeWidth } from './shrokeWidth/stroke-width'
-import TextAttribute from './texAttribute/TextAttribute'
+import TextAttribute from './textAttribute/TextAttribute'
 
 export function Attr() {
 

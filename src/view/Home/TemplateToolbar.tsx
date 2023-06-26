@@ -1,23 +1,14 @@
 'use client'
 import { ComponentType } from '@/src/constants/enum';
 import { blockInfoList } from '@/src/element/metadata';
-import { useAttrState } from '@/src/store/attrState';
-import { useCanvasState } from '@/src/store/canvas';
-import { useAttrCtx } from '@/src/use/useAttrCtx';
 import { useCanvasContext } from '@/src/use/useCanvasStore';
 import React, { Fragment, useMemo } from 'react';
 import { Toolbar, ToolbarSeparator, ToolbarToggleGroup, ToolbarToggleItem } from '../../../components/ui/toolbar';
+import { useAttrState } from '@/src/store/attrState';
 
 
 const TemplateToolbar = () => {
-  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-    const target = e.target;
-    if (!(target instanceof HTMLDivElement)) return
-    if (!target.dataset.type) return
-
-    e.dataTransfer?.setData("type", target.dataset.type ?? ComponentType.TextBox)
-  }
-  const attrState = useAttrCtx()
+  const attrState = useAttrState()
   const state = useCanvasContext()
 
   const fill = useMemo(() => {
@@ -25,6 +16,16 @@ const TemplateToolbar = () => {
 
     return f || ["#fff"]
   }, [state.activeElements?.length, state.canvasStyleData.backgroundColor, state.currentBlock])
+
+
+  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+    const target = e.target;
+    if (!(target instanceof HTMLDivElement)) return
+    if (!target.dataset.type) return
+
+    e.dataTransfer?.setData("type", target.dataset.type ?? ComponentType.TextBox)
+  }
+
 
   return <div className='w-1/3' onDragStart={(e) => handleDragStart(e)}>
     <Toolbar

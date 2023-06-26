@@ -12,12 +12,13 @@ import { emitter } from "@/src/core/event"
 import { useCanvasSelectedInitEvent } from "@/src/use/useInitEvent"
 import { useContextMenu } from "@/src/use/useContextMenu"
 import { useCanvasContext } from "@/src/use/useCanvasStore"
+import { useMount } from "@/src/use/useMount"
 const Editor = memo(() => {
   // const state = useCanvasState()
   const state = useCanvasContext()
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [canvasRenderer, setCanvasRenderer] = useState<CanvasElement | null>(null)
-  useEffect(() => {
+  useMount(() => {
     if (!canvasRef.current) return
     const canvas = new fabric.Canvas(canvasRef.current, Object.assign(canvasConfig))
     const c = new CanvasCore(canvas, {
@@ -30,15 +31,10 @@ const Editor = memo(() => {
     return () => {
       canvas.dispose()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  })
   useCanvasSelectedInitEvent()
   const {shouldShowContextMenu, contextPosition} = useContextMenu()
 
-  useEffect(() => {
-    console.log(state.blocks)
-
-  }, [state.blocks])
 
   const render = ({ type, rect, clientX, clientY }: { type: ComponentType, rect: DOMRect, clientX: number, clientY: number }) => {
     if (type) {
