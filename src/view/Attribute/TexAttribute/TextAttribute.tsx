@@ -126,21 +126,6 @@ export default function TextAttribute() {
                                 items={textFontFamily} />
                         </div>
                     </Label>
-
-                    {/* <Label className="mt-4" label="Font family">
-                        <FontFamilySelect
-                            value={blocks[0]?.fontFamily}
-                            onValueChange$={fontFamily => {
-                                blocks.forEach((block) => {
-                                    block.fontFamily = fontFamily
-                                })
-                                elements?.forEach((element) => {
-                                    element?.set('fontFamily', fontFamily)
-                                })
-                                state.canvas?.renderAll()
-                            }}
-                        />
-                    </Label> */}
                 </div>
             </div>
         </div>

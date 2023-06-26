@@ -3,6 +3,7 @@ import { ComponentType } from '@/src/constants/enum';
 import { blockInfoList } from '@/src/element/metadata';
 import { useAttrState } from '@/src/store/attrState';
 import { useCanvasState } from '@/src/store/canvas';
+import { useAttrCtx } from '@/src/use/useAttrCtx';
 import { useCanvasContext } from '@/src/use/useCanvasStore';
 import React, { Fragment, useMemo } from 'react';
 import { Toolbar, ToolbarSeparator, ToolbarToggleGroup, ToolbarToggleItem } from '../../../components/ui/toolbar';
@@ -16,14 +17,14 @@ const TemplateToolbar = () => {
 
     e.dataTransfer?.setData("type", target.dataset.type ?? ComponentType.TextBox)
   }
-  const attrState = useAttrState()
+  const attrState = useAttrCtx()
   const state = useCanvasContext()
 
   const fill = useMemo(() => {
     const f = state.activeElements?.length ? (state.currentBlock[0]?.fill as string)?.split(',') : state.canvasStyleData.backgroundColor?.split(",")
-    
+
     return f || ["#fff"]
-}, [state.activeElements?.length, state.canvasStyleData.backgroundColor, state.currentBlock])
+  }, [state.activeElements?.length, state.canvasStyleData.backgroundColor, state.currentBlock])
 
   return <div className='w-1/3' onDragStart={(e) => handleDragStart(e)}>
     <Toolbar
@@ -47,6 +48,7 @@ const TemplateToolbar = () => {
         </ToolbarToggleItem>
       </ToolbarToggleGroup>
       <ToolbarSeparator />
+
       {
         blockInfoList.map((ele) => (
           <Fragment key={ele.name}>
@@ -54,6 +56,22 @@ const TemplateToolbar = () => {
               draggable={true}
               data-id={ele.id}
               data-type={ele.type}
+              onClick={() => {
+                switch (ele.type) {
+                  case ComponentType.TextBox:
+                    attrState.updateAttrStateByKey("shouldShowText", true)
+                    break;
+                  case ComponentType.Img:
+                    attrState.updateAttrStateByKey("shouldShowImage", true)
+                    break;
+                  case ComponentType.Rect:
+                  case ComponentType.Circle:
+                    attrState.updateAttrStateByKey("shouldShowShape", true)
+                    break;
+                  default:
+                    break;
+                }
+              }}
               className='flex items-center justify-center' type="single" aria-label={ele.type}>
 
               <ToolbarToggleItem

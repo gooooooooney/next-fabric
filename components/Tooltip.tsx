@@ -17,7 +17,7 @@ export function Tooltip({tip, children}: TooltipProps) {
     <TooltipProvider>
       <_Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="outline" className="w-10 border-none  p-0">
+          <Button variant="outline" className="w-8 border-none  p-0">
             {children}
           </Button>
         </TooltipTrigger>

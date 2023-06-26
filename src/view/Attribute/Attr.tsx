@@ -2,7 +2,8 @@
 import { ComponentType } from '@/src/constants/enum'
 import { useCanvasContext } from '@/src/use/useCanvasStore'
 import React, { useMemo } from 'react'
-import { ShadowAttr } from './shadowAttrbute/ShadowAttrbute'
+import { ShadowAttr } from './shadowAttribute/shadow-attribute'
+import { StrokeWidth } from './shrokeWidth/stroke-width'
 import TextAttribute from './texAttribute/TextAttribute'
 
 export function Attr() {
@@ -26,10 +27,16 @@ export function Attr() {
         if (state.activeElements.length > 0) return <ShadowAttr />
         return null
     }
+
+    const renderStrokeAttr = () => {
+        if (state.activeElements.length > 0) return <StrokeWidth />
+        return null
+    }
     return (
-        <div className="min-h-[35rem] overflow-auto ">
+        <div className="h-[40rem] overflow-auto ">
             {renderTextAttr()}
             {renderShadowAttr()}
+            {renderStrokeAttr()}
         </div>
     )
 }

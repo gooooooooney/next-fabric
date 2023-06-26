@@ -124,7 +124,7 @@ export const Color = () => {
             Current color
           </div>
 
-          <div className="flex items-center gap-x-2 py-2">
+          <div className="flex w-60 items-center gap-x-2 overflow-x-auto py-2">
             <Tooltip tip='add a new color'>
               <div
                 onClick={() => {
