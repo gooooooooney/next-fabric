@@ -10,23 +10,24 @@ export const useContextMenu = () => {
   const state = useCanvasContext()
 
   const [shouldShowContextMenu, setShouldShowContextMenu] = useState(false)
-  const [contextPosition, setContextPosition] = useState({ left: 0, top: 0 })
-  useMount(() => {
+  const [contextPosition, setContextPosition] = useState({ x: 0, y: 0 })
+  useEffect(() => {
     emitter.on(CANVAS_EVENT_SELECTED.NONE, () => {
       setShouldShowContextMenu(false)
     })
-
-    emitter.on(Canvas_Event_Object.CONTEXT_MENU, (opt: fabric.TPointerEventInfo<fabric.TPointerEvent>) => {
+    state.canvas?.on("contextmenu", (opt) => {
       // 如果有选中的元素，就显示右键菜单
-      const hasActiveEle = state.activeElements && state.activeElements.length > 0
+      
+      const hasActiveEle = state.canvas?.getActiveObjects() && state.canvas?.getActiveObjects().length > 0
       if (opt.target && hasActiveEle) {
         setShouldShowContextMenu(true)
+        const pointer = opt.e as PointerEvent
         setContextPosition({
-          left: opt.pointer.x,
-          top: opt.pointer.y
+          x: pointer.x,
+          y: pointer.y
         })
       }
     })
-  })
+  }, [state.canvas])
   return { shouldShowContextMenu, contextPosition }
 }

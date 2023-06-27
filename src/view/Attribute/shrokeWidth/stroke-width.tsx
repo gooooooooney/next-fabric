@@ -98,11 +98,15 @@ export const StrokeWidth = () => {
         </Button>
         <div className="border-gray-3 flex h-[45px] w-2/5 items-center rounded-xl border border-solid  text-xl shadow-sm">
           <div className="pl-2">#</div>
-          <input className="m-0 w-full rounded-xl border-0 p-2 pr-1 text-xl outline-0 " type="text" value={state.currentBlock[0]?.stroke ? (state.currentBlock[0]?.stroke as string).slice(1) : ""} onKeyUp={(e) => {
-            if (e.key == KEY_CODE.ENTER) {
-              handleChangeStrokeColor("#" + (e.target as HTMLInputElement).value)
-            }
-          }} />
+          <input
+            className="m-0 w-full rounded-xl border-0 p-2 pr-1 text-xl outline-0 "
+            type="text"
+            defaultValue={state.currentBlock[0]?.stroke ? (state.currentBlock[0]?.stroke as string).slice(1) : ""}
+            onKeyUp={(e) => {
+              if (e.key == KEY_CODE.ENTER) {
+                handleChangeStrokeColor("#" + (e.target as HTMLInputElement).value)
+              }
+            }} />
         </div>
       </div>
 

@@ -1,7 +1,7 @@
 import TemplateToolbar from "@/src/view/Home/TemplateToolbar"
 import { Aside } from "./Aside"
 import { DropMenu } from "./DropMenu"
-import { Editor } from "./Editor"
+import { Editor } from "./Editor/Editor"
 import { Attr } from "@/src/view/Attribute/Attr"
 
 export const Home = () => <div>
@@ -19,7 +19,7 @@ export const Home = () => <div>
       <div className="relative mt-8 flex flex-row justify-center">
         <Editor />
       </div>
-      <div className="absolute mt-8 right-0 top-0 max-w-[20rem]">
+      <div className="absolute right-0 top-0 mt-8 max-w-[20rem]">
         <Attr />
       </div>
 
