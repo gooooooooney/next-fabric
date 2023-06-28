@@ -1,14 +1,12 @@
 'use client'
 import { elementBorder, fabric } from "@/lib/fabric"
-import { CANVAS_EVENT_SELECTED, ComponentType } from "@/src/constants/enum"
+import { ComponentType } from "@/src/constants/enum"
 import { canvasConfig } from "@/src/constants/fabric"
 import { CanvasCore } from "@/src/core"
 import { blockInfoList } from "@/src/element/metadata"
-import { useCanvasState } from "@/src/store/canvas"
-import { memo, useEffect, useRef, useState } from "react"
+import { memo, useRef, useState } from "react"
 import { cloneDeep, uid } from "@/lib/utils"
 import { CanvasElement } from "@/src/element"
-import { emitter } from "@/src/core/event"
 import { useCanvasSelectedInitEvent } from "@/src/use/useInitEvent"
 import { useContextMenu } from "@/src/use/useContextMenu"
 import { useCanvasContext } from "@/src/use/useCanvasStore"
@@ -25,16 +23,15 @@ const Editor = memo(() => {
     const c = new CanvasCore(canvas, {
       backgroundColor: state.canvasStyleData.backgroundColor,
     })
-
     setCanvasRenderer(c.canvasRenderer)
     state.setCanvas(canvas)
-    
     return () => {
       canvas.dispose()
     }
   })
   useCanvasSelectedInitEvent()
-  const {shouldShowContextMenu, contextPosition} = useContextMenu()
+  const { shouldShowContextMenu, setShouldShowContextMenu, contextPosition } = useContextMenu()
+
 
 
   const render = ({ type, rect, clientX, clientY }: { type: ComponentType, rect: DOMRect, clientX: number, clientY: number }) => {
@@ -92,7 +89,7 @@ const Editor = memo(() => {
         </div>
       </div>
     </div>
-    <ContextMenuWithoutTrigger open={shouldShowContextMenu} position={contextPosition}  />
+    <ContextMenuWithoutTrigger open={shouldShowContextMenu} onOpenChange={setShouldShowContextMenu} position={contextPosition} />
   </div>
 
 })

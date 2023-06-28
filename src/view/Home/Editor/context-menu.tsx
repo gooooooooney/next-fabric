@@ -14,16 +14,21 @@ import {
   MenuSubContent,
   MenuSubTrigger,
 } from "@/components/ui/menu"
-import { useCallback, useEffect, useState } from "react"
+import { use, useCallback, useEffect, useState } from "react"
 import * as MenuPrimitive from '@radix-ui/react-menu';
 import { useCallbackRef } from "@/src/use/useCallbackRef";
 import React from "react";
+import { useCanvasContext } from "@/src/use/useCanvasStore";
+import { AlertDialog } from "@/components/alert-dialog";
 
 interface Point { x: number, y: number }
 
-export function ContextMenuWithoutTrigger({ open:openProp, onOpenChange, modal = true, dir, position = { x: 0, y: 0 } }: MenuPrimitive.MenuProps & { position?: Point }) {
+export function ContextMenuWithoutTrigger({ open: openProp, onOpenChange, modal = true, dir, position = { x: 0, y: 0 } }: MenuPrimitive.MenuProps & { position?: Point }) {
+  const state = useCanvasContext()
   const [open, setOpen] = useState(openProp)
+  const [openDialog, setOpenDialog] = useState(false)
   const handleOpenChangeProp = useCallbackRef(onOpenChange);
+  const pointRef = React.useRef<Point>(position);
   const handleOpenChange = useCallback(
     (open: boolean) => {
       setOpen(open);
@@ -35,8 +40,11 @@ export function ContextMenuWithoutTrigger({ open:openProp, onOpenChange, modal =
     setOpen(openProp)
   }, [openProp])
   const virtualRef = React.useRef({
-    getBoundingClientRect: () => DOMRect.fromRect({ width: 0, height: 0, ...position }),
+    getBoundingClientRect: () => DOMRect.fromRect({ width: 0, height: 0, ...pointRef.current }),
   });
+  useEffect(() => {
+    pointRef.current = position;
+  }, [position])
   return (
     <Menu
       open={open}
@@ -45,20 +53,64 @@ export function ContextMenuWithoutTrigger({ open:openProp, onOpenChange, modal =
       onOpenChange={handleOpenChange}
     >
       <MenuAnchor virtualRef={virtualRef} className="inline-block" />
-      <MenuContent className="w-64">
-        <MenuItem inset>
-          Back
+      <MenuContent
+        side="right"
+        sideOffset={2}
+        align="start"
+        className="w-64">
+        <MenuItem onSelect={() => {
+          state.activeElements?.forEach((element => {
+            // FABRICV6: https://github.com/fabricjs/fabric.js/issues/8299
+            state.canvas?.bringObjectToFront(element)
+          }))
+        }} inset>
+          Bring to front
           <MenuShortcut>⌘[</MenuShortcut>
         </MenuItem>
-        <MenuItem inset disabled>
-          Forward
+        <MenuItem onSelect={() => {
+          state.activeElements?.forEach((element => {
+            state.canvas?.sendObjectToBack(element)
+          }))
+        }} inset>
+          Send to back
           <MenuShortcut>⌘]</MenuShortcut>
         </MenuItem>
-        <MenuItem inset>
-          Reload
+        <MenuItem onSelect={() => {
+          state.activeElements?.forEach((element => {
+            state.canvas?.sendObjectBackwards(element)
+          }))
+        }} inset>
+          Bring forward
           <MenuShortcut>⌘R</MenuShortcut>
         </MenuItem>
-        <MenuSub>
+        <MenuItem onSelect={() => {
+          state.activeElements?.forEach((element => {
+            state.canvas?.remove(element)
+          }))
+        }} inset>
+          Delete
+          <MenuShortcut>⌘R</MenuShortcut>
+        </MenuItem>
+        <AlertDialog
+          onCancel={() => {
+            setOpenDialog(false)
+          }
+          }
+          onConfirm={() => {
+            setOpenDialog(false)
+            state.canvas?.clear()
+          }} open={openDialog} >
+          <MenuItem onSelect={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
+            setOpenDialog(true)
+          }} inset>
+            Clear
+            <MenuShortcut>⌘R</MenuShortcut>
+          </MenuItem>
+        </AlertDialog>
+
+        {/* <MenuSub>
           <MenuSubTrigger inset>More Tools</MenuSubTrigger>
           <MenuSubContent className="w-48">
             <MenuItem>
@@ -85,7 +137,7 @@ export function ContextMenuWithoutTrigger({ open:openProp, onOpenChange, modal =
             Pedro Duarte
           </MenuRadioItem>
           <MenuRadioItem value="colm">Colm Tuite</MenuRadioItem>
-        </MenuRadioGroup>
+        </MenuRadioGroup> */}
       </MenuContent>
     </Menu>
   )

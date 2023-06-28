@@ -23,11 +23,11 @@ export const useContextMenu = () => {
         setShouldShowContextMenu(true)
         const pointer = opt.e as PointerEvent
         setContextPosition({
-          x: pointer.x,
-          y: pointer.y
+          x: pointer.clientX,
+          y: pointer.clientY,
         })
       }
     })
   }, [state.canvas])
-  return { shouldShowContextMenu, contextPosition }
+  return { shouldShowContextMenu, setShouldShowContextMenu, contextPosition }
 }
