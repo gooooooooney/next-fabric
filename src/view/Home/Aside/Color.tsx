@@ -15,7 +15,7 @@ export const Color = () => {
   const fill = useMemo(() => {
     const f = state.activeElements?.length ? (state.currentBlock[0]?.fill as string)?.split(',') : state.canvasStyleData.backgroundColor?.split(",")
     return f || ["#fff"]
-  }, [state.activeElements, state.currentBlock])
+  }, [state.activeElements?.length, state.canvasStyleData.backgroundColor, state.currentBlock])
   const [currentColor, setCurrentColor] = useState(fill[0])
   const [currentColorIndex, setCurrentColorIndex] = useState(0)
   const [colors, _setColors] = useState(fill)
@@ -165,7 +165,7 @@ export const Color = () => {
             displayColorPicker ?
               <div >
                 <div className="fixed inset-0" onClick={() => setDisplayColorPicker(false)} />
-                <div className="z-2 absolute left-1/2 top-full -translate-x-[50%]">
+                <div className="z-2 absolute left-1/2 top-full translate-x-[-50%]">
                   <ColorPicker.ChromePicker
                     onChangeComplete={(color) => {
                       const hexColor = color.hex

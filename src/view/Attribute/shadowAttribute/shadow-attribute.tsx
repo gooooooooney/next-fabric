@@ -223,7 +223,7 @@ export const ShadowAttr = () => {
                             displayShadowColorPicker ?
                               <div className='animate-in slide-in-from-right-2'>
                                 <div className="fixed inset-0" onClick={() => setDisplayShadowColorPicker(false)} />
-                                <div className="z-2 absolute left-1/2 top-full -translate-x-[50%]">
+                                <div className="z-2 absolute left-1/2 top-full translate-x-[-50%]">
                                   <ColorPicker.ChromePicker
                                     onChangeComplete={(color) => {
                                       const rgb = color.rgb

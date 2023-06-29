@@ -15,7 +15,7 @@ export const TextCanvasStyle: TextboxProps = {
   text: "Hello World",
   charSpacing: 0,
   // styles: [],
-  path: null,
+  path: undefined,
   pathStartOffset: 0,
   pathSide: "left",
   pathAlign: "baseline",

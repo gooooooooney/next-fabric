@@ -10,8 +10,8 @@ import {
   SelectContent
 } from '../ui/select';
 import * as SelectPrimitive from "@radix-ui/react-select"
-import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react';
 import React from 'react';
+import { Icons } from '../icons';
 
 interface SelectProps extends SelectPrimitive.SelectProps {
   items: (number | string | PlainObject)[],
@@ -39,7 +39,7 @@ export const Select = ({ onValueChange, label, prop, items = [], ...props }: Sel
       <SelectPrimitive.Portal>
         <SelectPrimitive.Content className="overflow-hidden rounded-md bg-white shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)]">
           <SelectPrimitive.ScrollUpButton className="text-violet11 flex h-[25px] cursor-default items-center justify-center bg-white">
-            <ChevronUpIcon />
+            <Icons.chevronDown />
           </SelectPrimitive.ScrollUpButton>
           <SelectPrimitive.Viewport className="p-[5px]">
             <SelectGroup>
@@ -61,7 +61,7 @@ export const Select = ({ onValueChange, label, prop, items = [], ...props }: Sel
             </SelectGroup>
           </SelectPrimitive.Viewport>
           <SelectPrimitive.ScrollDownButton className="text-violet11 flex h-[25px] cursor-default items-center justify-center bg-white">
-            <ChevronDownIcon />
+            <Icons.chevronDown />
           </SelectPrimitive.ScrollDownButton>
         </SelectPrimitive.Content>
       </SelectPrimitive.Portal>
