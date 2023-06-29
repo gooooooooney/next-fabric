@@ -57,13 +57,13 @@ export function ContextMenuWithoutTrigger({ open: openProp, onOpenChange, modal 
         side="right"
         sideOffset={2}
         align="start"
-        className="w-64">
+        className="w-40">
         <MenuItem onSelect={() => {
           state.activeElements?.forEach((element => {
             // FABRICV6: https://github.com/fabricjs/fabric.js/issues/8299
             state.canvas?.bringObjectToFront(element)
           }))
-        }} inset>
+        }} >
           Bring to front
           <MenuShortcut>⌘[</MenuShortcut>
         </MenuItem>
@@ -71,7 +71,7 @@ export function ContextMenuWithoutTrigger({ open: openProp, onOpenChange, modal 
           state.activeElements?.forEach((element => {
             state.canvas?.sendObjectToBack(element)
           }))
-        }} inset>
+        }} >
           Send to back
           <MenuShortcut>⌘]</MenuShortcut>
         </MenuItem>
@@ -79,7 +79,7 @@ export function ContextMenuWithoutTrigger({ open: openProp, onOpenChange, modal 
           state.activeElements?.forEach((element => {
             state.canvas?.sendObjectBackwards(element)
           }))
-        }} inset>
+        }} >
           Bring forward
           <MenuShortcut>⌘R</MenuShortcut>
         </MenuItem>
@@ -87,24 +87,27 @@ export function ContextMenuWithoutTrigger({ open: openProp, onOpenChange, modal 
           state.activeElements?.forEach((element => {
             state.canvas?.remove(element)
           }))
-        }} inset>
+        }} >
           Delete
           <MenuShortcut>⌘R</MenuShortcut>
         </MenuItem>
         <AlertDialog
           onCancel={() => {
             setOpenDialog(false)
-          }
-          }
+          }}
           onConfirm={() => {
             setOpenDialog(false)
+            handleOpenChange(false)
             state.canvas?.clear()
-          }} open={openDialog} >
+            state.canvas?.set({ backgroundColor: 'white' })
+            state.canvas?.renderAll()
+          }}
+          open={openDialog} >
           <MenuItem onSelect={(e) => {
             e.preventDefault()
             e.stopPropagation()
             setOpenDialog(true)
-          }} inset>
+          }}>
             Clear
             <MenuShortcut>⌘R</MenuShortcut>
           </MenuItem>
