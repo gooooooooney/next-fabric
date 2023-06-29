@@ -1,5 +1,5 @@
 import TemplateToolbar from "@/src/view/Home/TemplateToolbar"
-import { Aside } from "./Aside"
+import { Aside } from "../Aside"
 import { DropMenu } from "./DropMenu"
 import { Editor } from "./Editor/Editor"
 import { Attr } from "@/src/view/Attribute/Attr"

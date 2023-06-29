@@ -3,6 +3,7 @@ import { useAttrState } from "@/src/store/attrState"
 import { Color } from "./Color"
 import { ImageTemplate } from "./Image/image-template"
 import { ShapeTemplate } from "./Shape/shape-template"
+import { Template } from "./Template/template"
 import { TextTemplate } from "./Text/text-template"
 
 export const Aside =() => {
@@ -16,6 +17,8 @@ export const Aside =() => {
       return <TextTemplate />
     case attrState.shouldShowShape:
       return <ShapeTemplate />
+    case attrState.shouldShowTemplate:
+      return <Template/>
     default:
       return null
   }
