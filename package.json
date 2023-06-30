@@ -15,6 +15,9 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache"
   },
   "dependencies": {
+    "@pqina/filepond-plugin-image-editor": "^9.0.2",
+    "@pqina/pintura": "^8.60.10",
+    "@pqina/react-pintura": "^9.0.1",
     "@radix-ui/react-alert-dialog": "^1.0.4",
     "@radix-ui/react-context-menu": "^2.1.4",
     "@radix-ui/react-dropdown-menu": "^2.0.5",
@@ -35,6 +38,9 @@
     "clsx": "^1.2.1",
     "fabric": "6.0.0-beta10",
     "filepond": "^4.30.4",
+    "filepond-plugin-file-poster": "^2.5.1",
+    "filepond-plugin-file-validate-type": "^1.2.8",
+    "filepond-plugin-image-crop": "^2.0.6",
     "filepond-plugin-image-exif-orientation": "^1.0.11",
     "filepond-plugin-image-preview": "^4.6.11",
     "immer": "^10.0.2",

@@ -13,7 +13,6 @@ import { useCanvasContext } from "@/src/use/useCanvasStore"
 import { useMount } from "@/src/use/useMount"
 import { ContextMenuWithoutTrigger } from "./context-menu"
 const Editor = memo(() => {
-  // const state = useCanvasState()
   const state = useCanvasContext()
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [canvasRenderer, setCanvasRenderer] = useState<CanvasElement | null>(null)

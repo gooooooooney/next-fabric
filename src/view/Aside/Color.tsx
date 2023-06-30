@@ -5,7 +5,6 @@ import { Icons } from "@/components/icons"
 import { Tooltip } from "@/components/Tooltip"
 import { ColorPicker } from "@/components/ui/client"
 import { fabric, setGradient } from "@/lib/fabric"
-import { useCanvasState } from "@/src/store/canvas"
 import { useCanvasContext } from "@/src/use/useCanvasStore"
 import { Fragment, useEffect, useMemo, useState } from "react"
 

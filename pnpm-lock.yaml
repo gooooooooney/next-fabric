@@ -1,6 +1,15 @@
 lockfileVersion: '6.0'
 
 dependencies:
+  '@pqina/filepond-plugin-image-editor':
+    specifier: ^9.0.2
+    version: 9.0.2(filepond@4.30.4)
+  '@pqina/pintura':
+    specifier: ^8.60.10
+    version: 8.60.10
+  '@pqina/react-pintura':
+    specifier: ^9.0.1
+    version: 9.0.1(@pqina/pintura@8.60.10)
   '@radix-ui/react-alert-dialog':
     specifier: ^1.0.4
     version: 1.0.4(@types/react-dom@18.2.4)(@types/react@18.2.7)(react-dom@18.2.0)(react@18.2.0)
@@ -61,6 +70,15 @@ dependencies:
   filepond:
     specifier: ^4.30.4
     version: 4.30.4
+  filepond-plugin-file-poster:
+    specifier: ^2.5.1
+    version: 2.5.1(filepond@4.30.4)
+  filepond-plugin-file-validate-type:
+    specifier: ^1.2.8
+    version: 1.2.8(filepond@4.30.4)
+  filepond-plugin-image-crop:
+    specifier: ^2.0.6
+    version: 2.0.6(filepond@4.30.4)
   filepond-plugin-image-exif-orientation:
     specifier: ^1.0.11
     version: 1.0.11(filepond@4.30.4)
@@ -626,6 +644,26 @@ packages:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.15.0
+
+  /@pqina/filepond-plugin-image-editor@9.0.2(filepond@4.30.4):
+    resolution: {integrity: sha512-UE43QMo3mI64LjgmjbZRXLeVYoXGXVWSMfmG0LGV1CY33+kfB9+mJYqRhcHb0PEvsXdk6NEE1ITstjyJFsBpOg==}
+    peerDependencies:
+      filepond: 4.x
+    dependencies:
+      filepond: 4.30.4
+    dev: false
+
+  /@pqina/pintura@8.60.10:
+    resolution: {integrity: sha512-AT2GZv/shKuAf2HW1Y/GjAqjJ0vpLYXOfwD2oqyUAqjG/sJdKmziQFJFYvdKvUeJqermVuHJZbZ/h4AY06fnAQ==}
+    dev: false
+
+  /@pqina/react-pintura@9.0.1(@pqina/pintura@8.60.10):
+    resolution: {integrity: sha512-yn5lLODts1hYu827lhfRRkH82UWPgF6tH9qc+hbtsAIc/zhKUE9okA/SiaaSxt/FToNIHOjkwIiiCrwh1YLcHw==}
+    peerDependencies:
+      '@pqina/pintura': ^8.x
+    dependencies:
+      '@pqina/pintura': 8.60.10
+    dev: false
 
   /@radix-ui/number@1.0.1:
     resolution: {integrity: sha512-T5gIdVO2mmPW3NNhjNgEP3cqMXjXL9UbO0BzWcXfvdBs+BohbQxvd/K5hSVKmn9/lbTdsQVKbUcP5WLCwvUbBg==}
@@ -2683,6 +2721,30 @@ packages:
     dependencies:
       flat-cache: 3.0.4
     dev: true
+
+  /filepond-plugin-file-poster@2.5.1(filepond@4.30.4):
+    resolution: {integrity: sha512-WMB6Iww//U7KJR9Yt/zZ3cxC7SVySXGTrWPnAQokYSFfDp4uD31JLtyjYAVJnEg6T+niJvNwH48jKn/X3o75og==}
+    peerDependencies:
+      filepond: '>=4.x <5.x'
+    dependencies:
+      filepond: 4.30.4
+    dev: false
+
+  /filepond-plugin-file-validate-type@1.2.8(filepond@4.30.4):
+    resolution: {integrity: sha512-UBTqIWbk5+5R0GBELI8svu01MHWjFSLfc9DfCMvFtHKXLdJMxY1p37ChC4YKQjhfODaTuvLnNVRsukMGMFZBBg==}
+    peerDependencies:
+      filepond: '>=1.x <5.x'
+    dependencies:
+      filepond: 4.30.4
+    dev: false
+
+  /filepond-plugin-image-crop@2.0.6(filepond@4.30.4):
+    resolution: {integrity: sha512-bSy/KND4EP/QtW8MxIj23qgSEPUVRrT8XdktJ+OU9y8xRjFjTG+qcuw1LsycARQYRtzi8cZrD3P4POOITfkywQ==}
+    peerDependencies:
+      filepond: '>=3.x <5.x'
+    dependencies:
+      filepond: 4.30.4
+    dev: false
 
   /filepond-plugin-image-exif-orientation@1.0.11(filepond@4.30.4):
     resolution: {integrity: sha512-hLBc12Fk6Zkj3L8mSAn+elugHOqT5rLUbgVXQQIQjMe0FsGjtpoxqeVR6jt4IWHGat2L9sFAgU2TGmd1mqosCg==}

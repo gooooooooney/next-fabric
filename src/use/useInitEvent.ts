@@ -2,7 +2,6 @@ import { fabric } from "@/lib/fabric"
 import { useEffect, useState } from "react"
 import { CANVAS_EVENT_SELECTED, Canvas_Event_Object } from "../constants/enum"
 import { emitter } from "../core/event"
-import { useCanvasState } from "../store/canvas"
 import { useCanvasContext } from "./useCanvasStore"
 
 export const useCanvasSelectedInitEvent = () => {
